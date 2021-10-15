@@ -1,0 +1,219 @@
+[zlib]
+friendly-name=zlib Compression Library
+description=Compression library implementing DEFLATE algorithm.
+type=file
+version=1.2.11
+source=/libz.so
+destination=/usr/lib/libz.so.1
+mask=555
+dependencies=
+
+[ungz]
+friendly-name=Simple Ungzip Tool
+description=Light wrapper around zlib to decompress gzipped files.
+type=file
+version=1.0.0
+source=/ungz
+mask=555
+destination=/usr/bin/ungz
+dependencies=zlib
+
+[binutils]
+friendly-name=GNU Binutils
+description=Collection of tools for compiling software (assembler, linker, etc.)
+type=tgz
+version=2.27.0
+source=/binutils.tgz
+destination=/usr
+dependencies=ungz
+
+[gcc]
+friendly-name=GNU Compiler Collection
+description=C/C++ compiler
+type=tgz
+version=6.4.0
+source=/gcc.tgz
+destination=/usr
+dependencies=ungz
+
+[python]
+friendly-name=Python 3.6
+description=Bytecode-interpreted programming language.
+type=tgz
+version=3.6.0
+source=/python3.tgz
+destination=/
+dependencies=ungz
+
+[python-dev]
+friendly-name=Python 3.6 (Headers)
+description=Bytecode-interpreted programming language.
+type=tgz
+version=3.6.0
+source=/python-dev.tgz
+destination=/
+dependencies=ungz python
+
+[python-cairo]
+friendly-name=Python bindings for Cairo
+description=Python bindings for the Cairo graphics library
+type=tgz
+version=1.10.1
+source=/python-cairo.tgz
+destination=/
+dependencies=ungz python libcairo
+
+
+[libfreetype]
+friendly-name=Freetype
+description=TrueType/OpenType rendering library
+type=tgz
+version=2.9.1
+source=/libfreetype.tgz
+destination=/
+dependencies=ungz
+
+[libpixman-1]
+friendly-name=Pixman
+description=General pixel-pushing library
+type=tgz
+version=0.34.0
+source=/libpixman-1.tgz
+destination=/
+dependencies=ungz
+
+[libcairo]
+friendly-name=Cairo
+description=General graphics library
+type=tgz
+version=1.15.10
+source=/libcairo.tgz
+destination=/
+dependencies=ungz libpixman-1
+
+[fonts]
+friendly-name=TrueType Fonts
+description=A collection of TrueType fonts.
+type=tgz
+version=1.0.0
+source=/fonts.tgz
+destination=/usr/share
+dependencies=libfreetype ungz
+post=font-server
+
+[ext-cairo]
+friendly-name=Yutani Cairo backend
+description=Cairo backend for the window compositor
+type=tgz
+version=1.0.0
+source=/ext-cairo.tgz
+destination=/
+dependencies=libcairo libfreetype ungz
+post=yutani-query -qe; exit 0
+
+[ext-freetype]
+friendly-name=Freetype Extensions
+description=Freetype backend extension for text rendering
+type=tgz
+version=1.0.0
+source=/ext-freetype.tgz
+destination=/
+dependencies=libfreetype ungz fonts
+
+[src-tools]
+friendly-name=ToaruOS Build Tools
+description=Tools to automate building ToaruOS applications and kernels.
+type=tgz
+version=1.10.0
+source=/tools.tgz
+destination=/usr/bin
+dependencies=ungz python build-essential
+
+[python-demos]
+friendly-name=Python Demos
+description=Legacy applications from ToaruOS 1.2.x.
+type=tgz
+version=1.8.0
+source=/pybins.tgz
+destination=/usr/share
+dependencies=ungz python extensions python-cairo
+
+[build-essential]
+friendly-name=Essential Build Tools (metapackage)
+description=Metapackage to install GCC and Binutils.
+type=meta
+version=1.0.0
+dependencies=gcc binutils
+
+[libmbedtls]
+friendly-name=mbedTLS
+description=mbedTLS encryption library
+type=tgz
+version=2.5.1
+dependencies=ungz
+source=/libmbedtls.tgz
+destination=/
+
+[fetch-tls]
+friendly-name=fetch (HTTPS support)
+description=fetch tool with HTTPS support
+type=tgz
+version=1.1.0
+dependencies=libmbedtls
+source=/fetch-tls.tgz
+destination=/
+
+[libsdl]
+friendly-name=Simple DirectMedia Library
+description=A library for building portable graphical applications
+type=tgz
+version=1.2.15
+dependencies=ungz
+source=/libsdl.tgz
+destination=/
+
+[quake]
+friendly-name=Quake
+description=shareware version of the popular id software game
+type=tgz
+version=1.0.9
+dependencies=libsdl ungz
+source=/quake.tgz
+destination=/
+post=/usr/share/games/quake/bin/install_desktop_launcher.sh
+
+[fire-sdl]
+friendly-name=Fire (SDL Demo)
+description=SDL fireworks demo
+type=tgz
+version=1.0.0
+dependencies=libsdl ungz
+source=/fire-sdl.tgz
+destination=/
+
+[bochs]
+friendly-name=Bochs PC Emulator
+description=Software emulator for x86 PCs
+type=tgz
+version=2.6.9
+dependencies=libsdl ungz
+source=/bochs-2.6.9.tgz
+destination=/
+
+[ponysay]
+friendly-name=Ponysay
+description=Print inspirational quotes
+type=tgz
+version=1.0.0
+dependencies=python ungz
+source=/ponysay.tgz
+destination=/
+
+[doom]
+friendly-name=Doom
+description=Classic id software first-person shooter
+type=tgz
+version=1.0.0
+dependencies=ungz
+source=/doom.tgz
+destination=/
